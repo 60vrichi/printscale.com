@@ -2,7 +2,7 @@
 
 PrintScale je jednoduchý nástroj na prípravu obrázkov na tlač. Otvor `index.html` v prehliadači alebo spusti statický webový server v koreňovom priečinku projektu.
 
-Verejná verzia: https://60vrichi.github.io/printscale.com/
+Verejná verzia: https://printsscales.com/
 
 ## Funkcie
 

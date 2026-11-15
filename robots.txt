@@ -1,4 +1,4 @@
 User-agent: *
 Allow: /
 
-Sitemap: https://60vrichi.github.io/printscale.com/sitemap.xml
+Sitemap: https://printsscales.com/sitemap.xml

@@ -1,0 +1,233 @@
+<!doctype html>
+<html lang="sk">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta name="theme-color" content="#090d14" />
+    <meta
+      name="description"
+      content="PrintScale — pripravte obrázky v presnej veľkosti na tlač, skontrolujte DPI a exportujte ich do PNG alebo PDF."
+    />
+    <link rel="canonical" href="https://60vrichi.github.io/printscale.com/" />
+    <meta property="og:type" content="website" />
+    <meta property="og:title" content="PrintScale — štúdio tlače" />
+    <meta
+      property="og:description"
+      content="Pripravte obrázky v presnej veľkosti na tlač, upravte ich a exportujte do PNG alebo PDF."
+    />
+    <meta property="og:url" content="https://60vrichi.github.io/printscale.com/" />
+    <title>PrintScale — štúdio tlače</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700&family=Space+Grotesk:wght@400;500;600;700&display=swap"
+      rel="stylesheet"
+    />
+    <link rel="stylesheet" href="./style.css" />
+  </head>
+  <body>
+    <div class="app-shell">
+      <header class="topbar">
+        <a class="brand" href="#" aria-label="PrintScale, domov">
+          <span class="brand-mark" aria-hidden="true">
+            <svg viewBox="0 0 32 32" fill="none">
+              <path d="M7 23.5 15 7l4 9 2.2-4.5L27 23.5H7Z" stroke="currentColor" stroke-width="2.2" stroke-linejoin="round" />
+              <path d="M11 20h10" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" />
+            </svg>
+          </span>
+          <span>print<span class="brand-accent">scale</span></span>
+          <span class="brand-tag">STUDIO</span>
+        </a>
+        <div class="topbar-right">
+          <span class="privacy-indicator"><span class="privacy-dot"></span> Súbory zostávajú v tvojom zariadení</span>
+          <button class="button button-quiet" id="reset-all" type="button">Obnoviť</button>
+        </div>
+      </header>
+
+      <main class="workspace">
+        <aside class="sidebar">
+          <div class="sidebar-heading">
+            <div>
+              <p class="eyebrow">PRACOVNÝ PRIESTOR</p>
+              <h1>Príprava na tlač</h1>
+            </div>
+            <span class="step-badge">01 <span>/ 03</span></span>
+          </div>
+
+          <label class="upload-zone" id="upload-zone" for="image-upload">
+            <input id="image-upload" type="file" accept="image/*" />
+            <span class="upload-icon" aria-hidden="true">
+              <svg viewBox="0 0 24 24" fill="none"><path d="M12 16V4m0 0L7 9m5-5 5 5M5 15v4h14v-4" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"/></svg>
+            </span>
+            <span class="upload-title">Nahraj svoj obrázok</span>
+            <span class="upload-caption">Presuň sem súbor alebo klikni a vyber</span>
+            <span class="upload-types">JPG · PNG · WEBP</span>
+          </label>
+
+          <section class="panel-section">
+            <div class="section-title-row">
+              <h2>Rozmery tlače</h2>
+              <span class="section-index">01</span>
+            </div>
+            <label class="field-label" for="paper-preset">Formát papiera</label>
+            <select id="paper-preset" class="field-control">
+              <option value="custom">Vlastné rozmery</option>
+              <option value="A4">A4 · 21 × 29,7 cm</option>
+              <option value="A3">A3 · 29,7 × 42 cm</option>
+              <option value="A2">A2 · 42 × 59,4 cm</option>
+              <option value="A1">A1 · 59,4 × 84,1 cm</option>
+              <option value="A0">A0 · 84,1 × 118,9 cm</option>
+            </select>
+            <div class="dimension-row">
+              <label class="dimension-field">
+                <span>Šírka</span>
+                <span class="dimension-input"><input id="print-width" type="number" min="1" max="200" step="0.1" value="21" /><span>cm</span></span>
+              </label>
+              <span class="dimension-cross" aria-hidden="true">×</span>
+              <label class="dimension-field">
+                <span>Výška</span>
+                <span class="dimension-input"><input id="print-height" type="number" min="1" max="200" step="0.1" value="29.7" /><span>cm</span></span>
+              </label>
+            </div>
+            <label class="field-label dpi-label" for="print-dpi">Rozlíšenie tlače <span id="dpi-value">300 DPI</span></label>
+            <input class="range-input" id="print-dpi" type="range" min="72" max="600" step="1" value="300" />
+            <div class="range-ends"><span>72</span><span>600 DPI</span></div>
+            <div id="quality-card" class="quality-card quality-empty">
+              <span class="quality-indicator" aria-hidden="true"></span>
+              <span id="quality-message">Nahraj obrázok a skontroluj kvalitu tlače.</span>
+            </div>
+          </section>
+
+          <section class="panel-section">
+            <div class="section-title-row">
+              <h2>Úpravy fotografie</h2>
+              <span class="section-index">02</span>
+            </div>
+            <div class="adjustment">
+              <label for="brightness">Jas <output id="brightness-value">100%</output></label>
+              <input class="range-input" id="brightness" type="range" min="0" max="200" value="100" />
+            </div>
+            <div class="adjustment">
+              <label for="contrast">Kontrast <output id="contrast-value">100%</output></label>
+              <input class="range-input" id="contrast" type="range" min="0" max="200" value="100" />
+            </div>
+            <div class="adjustment">
+              <label for="saturation">Sýtosť <output id="saturation-value">100%</output></label>
+              <input class="range-input" id="saturation" type="range" min="0" max="200" value="100" />
+            </div>
+            <div class="adjustment">
+              <label for="blur">Rozmazanie <output id="blur-value">0</output></label>
+              <input class="range-input" id="blur" type="range" min="0" max="20" value="0" />
+            </div>
+            <div class="filter-chips">
+              <button class="filter-chip" id="grayscale-toggle" type="button" aria-pressed="false">◐ Čiernobielo</button>
+              <button class="filter-chip" id="sepia-toggle" type="button" aria-pressed="false">◒ Sépia</button>
+            </div>
+            <div class="rotate-row">
+              <span>Otočiť obrázok</span>
+              <div class="rotate-buttons">
+                <button class="icon-button" id="rotate-left" type="button" aria-label="Otočiť doľava">↶</button>
+                <button class="icon-button" id="rotate-right" type="button" aria-label="Otočiť doprava">↷</button>
+              </div>
+            </div>
+          </section>
+
+          <section class="panel-section crop-section">
+            <div class="section-title-row">
+              <h2>Orezať obrázok</h2>
+              <button class="text-button" id="reset-crop" type="button">Resetovať</button>
+            </div>
+            <div class="crop-grid">
+              <label class="crop-field">Zľava <input id="crop-left" type="number" min="0" max="45" value="0" /><span>%</span></label>
+              <label class="crop-field">Sprava <input id="crop-right" type="number" min="0" max="45" value="0" /><span>%</span></label>
+              <label class="crop-field">Zhora <input id="crop-top" type="number" min="0" max="45" value="0" /><span>%</span></label>
+              <label class="crop-field">Zdola <input id="crop-bottom" type="number" min="0" max="45" value="0" /><span>%</span></label>
+            </div>
+            <p class="field-hint">Orezanie sa prispôsobí zvolenému pomeru strán.</p>
+          </section>
+
+          <section class="panel-section">
+            <div class="section-title-row">
+              <h2>Text a rám</h2>
+              <span class="section-index">03</span>
+            </div>
+            <label class="field-label" for="overlay-text">Text na obrázok</label>
+            <input class="field-control" id="overlay-text" type="text" maxlength="80" placeholder="Napíš svoj text…" />
+            <div class="text-options">
+              <label class="compact-field">Farba <input id="text-color" type="color" value="#ffffff" /></label>
+              <label class="compact-field">Veľkosť <select id="text-size"><option value="small">Malý</option><option value="medium" selected>Stredný</option><option value="large">Veľký</option></select></label>
+            </div>
+            <div class="frame-row">
+              <label class="check-label"><input id="frame-toggle" type="checkbox" /> Rám okolo fotky</label>
+              <input id="frame-color" type="color" value="#f4eee5" aria-label="Farba rámu" />
+            </div>
+          </section>
+
+          <section class="panel-section qr-section">
+            <div class="section-title-row">
+              <h2>QR kód</h2>
+              <span class="section-index">+</span>
+            </div>
+            <div class="qr-row">
+              <input class="field-control" id="qr-text" type="text" maxlength="17" placeholder="URL alebo krátky text" />
+              <button class="button button-secondary" id="add-qr" type="button">Pridať</button>
+            </div>
+            <p class="field-hint">Krátky text alebo odkaz, maximálne 17 znakov.</p>
+          </section>
+
+          <div class="ai-notice">
+            <span class="ai-icon">✳</span>
+            <div><strong>AI nástroje</strong><p>AI zväčšenie a odstránenie pozadia vyžadujú samostatnú AI službu.</p></div>
+            <span class="coming-soon">ČOSKORO</span>
+          </div>
+        </aside>
+
+        <section class="preview-area" aria-label="Náhľad obrázka a export">
+          <div class="preview-toolbar">
+            <div class="preview-title"><span class="live-dot"></span><span>NÁHĽAD PRACOVNEJ PLOCHY</span></div>
+            <div class="preview-actions">
+              <span id="preview-dimensions" class="preview-meta">A4 · 21 × 29,7 cm</span>
+              <span class="toolbar-divider"></span>
+              <button id="zoom-out" class="icon-button toolbar-icon" type="button" aria-label="Zmenšiť náhľad">−</button>
+              <span id="zoom-value" class="zoom-value">100%</span>
+              <button id="zoom-in" class="icon-button toolbar-icon" type="button" aria-label="Zväčšiť náhľad">+</button>
+              <button id="fit-preview" class="fit-button" type="button">Prispôsobiť</button>
+            </div>
+          </div>
+
+          <div class="canvas-stage" id="canvas-stage">
+            <div class="empty-state" id="empty-state">
+              <div class="empty-art" aria-hidden="true">
+                <span class="art-sun"></span><span class="art-hill art-hill-back"></span><span class="art-hill art-hill-front"></span>
+                <span class="art-frame"></span>
+              </div>
+              <h2>Tvoje plátno čaká</h2>
+              <p>Začni nahraním obrázka a priprav ho na dokonalú tlač.</p>
+              <button class="button button-primary" id="empty-upload" type="button">＋ Nahrať obrázok</button>
+              <span class="empty-privacy">Súkromne. Bez nahrávania na server.</span>
+            </div>
+            <div class="canvas-wrap" id="canvas-wrap" hidden>
+              <canvas id="preview-canvas" aria-label="Náhľad upravovaného obrázka"></canvas>
+              <div class="canvas-tag" id="canvas-tag">A4 · 300 DPI</div>
+            </div>
+            <div class="stage-coordinates" aria-hidden="true"><span>●</span> RGB · sRGB</div>
+          </div>
+
+          <div class="export-bar">
+            <div class="export-info">
+              <span class="export-icon" aria-hidden="true">↗</span>
+              <span><strong>Pripravené na tlač?</strong><small id="export-summary">Nahraj obrázok a začni s úpravami.</small></span>
+            </div>
+            <div class="export-buttons">
+              <button class="button button-secondary" id="download-png" type="button" disabled><span>↓</span> Stiahnuť PNG</button>
+              <button class="button button-primary" id="download-pdf" type="button" disabled><span>▤</span> Exportovať PDF</button>
+            </div>
+          </div>
+          <div class="toast" id="toast" role="status" aria-live="polite"></div>
+        </section>
+      </main>
+      <footer class="footer"><span>PRINTSCALE <span>STUDIO</span></span><span>Presne pripravené. Krásne vytlačené.</span><span>Všetky úpravy prebiehajú lokálne v tvojom prehliadači.</span></footer>
+    </div>
+    <script src="./app.js"></script>
+  </body>
+</html>
